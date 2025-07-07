@@ -1,0 +1,33 @@
+
+<%= render 'templates/header' %>
+<%= render 'templates/sidebar' %>
+      <!-- Main Content -->
+      <main class="col-md-9 col-lg-5 px-md-4 py-4">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Data</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Edit Data</li>
+          </ol>
+        </nav>
+        <div class="card">
+          <div class="card-body">
+            <%= form_tag("/data/edit/#{@data_item.id}") %>
+            <div class="form-group">
+                <label>Caption</label>
+                <textarea class="form-control" name="caption"><%= @data_item.caption %></textarea>
+            </div>
+            <div class="form-group">
+                <label>Label</label>
+                <select class="form-control" name="label">
+                  <option value="<%= @data_item.label %>">- <%= @data_item.label %></option>
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                </select>
+            </div>
+            <button class="btn btn-primary btn-sm mt-2" type="submit">Simpan</button>
+        </div>
+        </div>
+      </main>
+    </div>
+  </div>
+<%= render 'templates/footer' %>
