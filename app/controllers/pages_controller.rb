@@ -1,14 +1,15 @@
 class PagesController < ApplicationController
   def login
     if request.post?
-      email = params[:email]
+      username = params[:username]
       password = params[:password]
 
-      # Contoh login manual
-      if email == "admin@example.com" && password == "123456"
-        redirect_to dashboard_path  
+      user = UserItem.find_by(username: username, password: password)
+
+      if user
+        redirect_to dashboard_path  # Ganti sesuai route tujuan
       else
-        flash.now[:alert] = "Email atau password salah"
+        flash.now[:alert] = "Username atau password salah"
         render :login
       end
     end
