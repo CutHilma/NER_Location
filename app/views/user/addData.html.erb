@@ -1,0 +1,32 @@
+
+<%= render 'templates/header' %>
+<%= render 'templates/sidebar' %>
+      <!-- Main Content -->
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+          <%= flash[:pesan].html_safe if flash[:pesan].present? %>
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item" aria-current="page">User Management</li>
+              <li class="breadcrumb-item active" aria-current="page">Tambah User</li>
+            </ol>
+          </nav>
+        <div class="card">
+          <div class="card-header">
+          </div>
+          <div class="card-body">
+          <%= form_tag("/user/create") %>
+          <div class="form-group">
+              <label>Username</label>
+              <input class="form-control" name="username">
+          </div>
+          <div class="form-group">
+              <label>Password</label>
+              <input class="form-control" name="password">
+          </div>
+          <button class="btn btn-primary btn-sm mt-2" type="submit">Simpan</button>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+<%= render 'templates/footer' %>

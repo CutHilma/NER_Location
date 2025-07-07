@@ -1,0 +1,3 @@
+class UserItem < ApplicationRecord
+end
+ 

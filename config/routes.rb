@@ -7,6 +7,10 @@ Rails.application.routes.draw do
   # Halaman Dashboard
   get 'dashboard', to: 'dashboard#show'
 
+  # Halaman User Managemen
+  get 'user/show'
+  get 'user/addData'
+
   # Halaman Data
   get 'data/show'
   get 'data/addData'
