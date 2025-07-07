@@ -1,10 +1,7 @@
 class DashboardController < ApplicationController
-  def index
-  end
 
   def show
-  end
-
-  def new
+    @user_item = UserItem.count
+    @data_item = DataItem.count
   end
 end

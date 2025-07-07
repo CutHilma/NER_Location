@@ -14,4 +14,9 @@ class PagesController < ApplicationController
       end
     end
   end
+
+  def logout
+    session[:user_id] = nil
+    redirect_to login_path, notice: "Anda telah logout."
+  end
 end

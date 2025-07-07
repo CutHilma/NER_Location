@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
+  get "instagram_scraper/index"
+  get "instagram_scraper/scrape"
   # Halaman Login
   root 'pages#login'  # homepage
   get 'login', to: 'pages#login'
   post 'login', to: 'pages#login'
- 
+  get 'pages/logout', to: 'pages#logout'
+
   # Halaman Dashboard
   get 'dashboard', to: 'dashboard#show'
 
@@ -14,7 +17,7 @@ Rails.application.routes.draw do
   get '/user/delete/:id' => 'user#delete'
   get '/user/editData/:id' => 'user#editData'
   post '/user/edit/:id' => 'user#edit'
-  
+
   # Halaman Data
   get 'data/show'
   get 'data/addData'
@@ -28,6 +31,9 @@ Rails.application.routes.draw do
   get 'ner/train', to: 'ner#train'
   get 'ner/predict', to: 'ner#predict'
   
-  
+  #Scraping Data Instagram
+  get 'instagram_scraper', to: 'instagram_scraper#index'
+  post 'instagram_scraper/scrape', to: 'instagram_scraper#scrape'
+
 
 end

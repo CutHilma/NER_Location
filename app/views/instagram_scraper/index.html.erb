@@ -1,0 +1,116 @@
+
+<%= render 'templates/header' %>
+<%= render 'templates/sidebar' %>
+      <!-- Main Content -->
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Data</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Tambah Data</li>
+          </ol>
+        </nav>
+        <div class="card">
+          <div class="card-body">
+          <h1 class="mb-4">Scrape Caption Instagram</h1>
+
+          <%= form_with url: instagram_scraper_scrape_path, method: :post, local: true, class: "needs-validation", novalidate: true do %>
+            <div class="mb-3">
+              <label for="url" class="form-label">Masukkan URL Postingan Instagram:</label>
+              <%= text_field_tag :url, params[:url], placeholder: "https://www.instagram.com/p/...", class: "form-control", required: true %>
+              <div class="invalid-feedback">
+                Mohon masukkan URL yang valid.
+              </div>
+            </div>
+          
+            <div>
+              <%= submit_tag "Scrape", class: "btn btn-primary" %>
+            </div>
+          <% end %>
+          
+          <% if @caption.present? %>
+            <div class="alert alert-success mt-4" role="alert">
+              <h5 class="alert-heading">Caption Ditemukan:</h5>
+              <p><%= @caption %></p>
+            </div>
+            
+            # tambah caption baru
+            <%= form_with url: data_create_path, method: :post, local: true, class: "needs-validation", novalidate: true do %>
+                <div class="mb-3">
+                  <label for="caption" class="form-label">Masukkan Caption Postingan Instagram:</label>
+                  <%= text_area_tag :caption, params[:caption], class: "form-control", rows: 3, required: true %>
+                  <div class="invalid-feedback">
+                    Mohon masukkan Caption.
+                  </div>
+                </div>
+              
+                <div class="mb-3">
+                  <label class="form-label">Label:</label>
+                  <div>
+                    <div class="form-check form-check-inline">
+                      <%= radio_button_tag :label, '1', params[:label] == '1', class: "form-check-input", id: "label_1", required: true %>
+                      <label class="form-check-label" for="label_1">1</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <%= radio_button_tag :label, '0', params[:label] == '0', class: "form-check-input", id: "label_0" %>
+                      <label class="form-check-label" for="label_0">0</label>
+                    </div>
+                  </div>
+                  <div class="invalid-feedback d-block">
+                    Mohon pilih Label.
+                  </div>
+                </div>
+              
+                <div>
+                  <%= submit_tag "Simpan Caption", class: "btn btn-primary" %>
+                </div>
+              <% end %>
+              
+              <!-- Optional: Bootstrap 5 validation script -->
+              <script>
+                (() => {
+                  'use strict'
+                  const forms = document.querySelectorAll('.needs-validation')
+                  Array.from(forms).forEach(form => {
+                    form.addEventListener('submit', event => {
+                      if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                      }
+                      form.classList.add('was-validated')
+                    }, false)
+                  })
+                })()
+              </script>
+              
+
+
+
+          <% elsif @error.present? %>
+            <div class="alert alert-danger mt-4" role="alert">
+              <%= @error %>
+            </div>
+          <% end %>
+          
+          <!-- Optional: Bootstrap 5 form validation JS -->
+          <script>
+            (() => {
+              'use strict'
+              const forms = document.querySelectorAll('.needs-validation')
+              Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                  if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                  }
+                  form.classList.add('was-validated')
+                }, false)
+              })
+            })()
+          </script>
+          
+        </div>
+      </main>
+    </div>
+  </div>
+<%= render 'templates/footer' %>
+
