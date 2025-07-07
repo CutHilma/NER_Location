@@ -10,7 +10,11 @@ Rails.application.routes.draw do
   # Halaman User Managemen
   get 'user/show'
   get 'user/addData'
-
+  post '/user/create' => 'user#create'
+  get '/user/delete/:id' => 'user#delete'
+  get '/user/editData/:id' => 'user#editData'
+  post '/user/edit/:id' => 'user#edit'
+  
   # Halaman Data
   get 'data/show'
   get 'data/addData'

@@ -31,10 +31,10 @@
                 <td><%= value['username'] %></td>
                 <td><%= value['created_at'] %></td>
                 <td class="text-center">
-                  <a href="/data/editData/<%= value.id %>" class="btn btn-sm btn-primary btn-block">
+                  <a href="/user/editData/<%= value.id %>" class="btn btn-sm btn-primary btn-block">
                     <i class="fa fa-edit"></i>
                   </a>
-                  <a href="/data/delete/<%= value.id %>" class="btn btn-sm btn-danger btn-block" onclick="return confirm('Apakah anda yakin ingin menghapus?')">
+                  <a href="/user/delete/<%= value.id %>" class="btn btn-sm btn-danger btn-block" onclick="return confirm('Apakah anda yakin ingin menghapus?')">
                     <i class="fa fa-trash"></i>
                   </a>
                 </td>

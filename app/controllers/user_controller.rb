@@ -4,7 +4,6 @@ class UserController < ApplicationController
         @userItem = UserItem.all
     end
 
-    
     def addData
     end
 
