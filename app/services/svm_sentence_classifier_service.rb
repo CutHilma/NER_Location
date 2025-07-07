@@ -1,8 +1,10 @@
 require 'rb-libsvm'
 
 class SvmSentenceClassifierService
-  LOCATION_KEYWORDS = %w[Aceh Kepulauan Riau Jambi Sumatera Selatan Bangka Belitung Bengkulu Lampung Jawa Barat Banten Jawa Tengah Yogyakarta Nusa Tenggara Barat Nusa Tenggara Timur Kalimantan Barat Kalimantan Tengah Kalimantan Selatan Sulawesi Utara Gorontalo Sulawesi Tengah Sulawesi Barat Sulawesi Selatan Sulawesi Tenggara Maluku Maluku Utara Papua Papua Barat Papua Tengah Papua Pegunungan Papua Selatan Papua Barat Daya Kalimantan Timur Kalimantan Utara Jawa Timur Jakarta Bandung Surabaya Medan Bali Riau Sumatera Utara]
-
+  
+  location_array = Location.pluck(:lokasi)
+  LOCATION_KEYWORDS = "%W[#{location_array.join(' ')}]"
+  
   def extract_features(sentence)
     words = sentence.split(" ")
     capital_words = words.select { |w| w[0] =~ /[A-Z]/ }

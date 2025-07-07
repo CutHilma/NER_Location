@@ -1,0 +1,25 @@
+
+<%= render 'templates/header' %>
+<%= render 'templates/sidebar' %>
+      <!-- Main Content -->
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Data</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Edit Lokasi</li>
+          </ol>
+        </nav>
+        <div class="card">
+          <div class="card-body">
+            <%= form_tag("/location/edit/#{@lokasi.id}") %>
+            <div class="form-group">
+                <label>Lokasi</label>
+                <input class="form-control" name="lokasi" value="<%= @lokasi.lokasi %>">
+            </div>
+            <button class="btn btn-primary btn-sm mt-2" type="submit">Simpan</button>
+        </div>
+        </div>
+      </main>
+    </div>
+  </div>
+<%= render 'templates/footer' %>

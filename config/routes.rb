@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
-  get "instagram_scraper/index"
-  get "instagram_scraper/scrape"
+  
   # Halaman Login
   root 'pages#login'  # homepage
   get 'login', to: 'pages#login'
@@ -10,13 +9,17 @@ Rails.application.routes.draw do
   # Halaman Dashboard
   get 'dashboard', to: 'dashboard#show'
 
-  # Halaman User Managemen
+  # Halaman User Management
   get 'user/show'
   get 'user/addData'
   post '/user/create' => 'user#create'
   get '/user/delete/:id' => 'user#delete'
   get '/user/editData/:id' => 'user#editData'
   post '/user/edit/:id' => 'user#edit'
+
+  # Intagram Scrapper
+  get "instagram_scraper/index"
+  get "instagram_scraper/scrape"
 
   # Halaman Data
   get 'data/show'
@@ -25,6 +28,15 @@ Rails.application.routes.draw do
   get '/data/delete/:id' => 'data#delete'
   get '/data/editData/:id' => 'data#editData'
   post '/data/edit/:id' => 'data#edit'
+
+  #Halaman Location
+  get "location/index"
+  get "location/show"
+  get 'location/addData'
+  post '/location/create' => 'location#create'
+  get '/location/delete/:id' => 'location#delete'
+  get '/location/editData/:id' => 'location#editData'
+  post '/location/edit/:id' => 'location#edit'
 
   #Halaman SVM
   get 'ner/show'
