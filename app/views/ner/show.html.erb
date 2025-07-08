@@ -15,7 +15,45 @@
             <%# <a href="/data/addData" class="btn btn-primary btn-sm mb-2">Tambah Caption</a> %>
             <h1>Data Testing</h1>
             <p>Data Testing yang Digunakan adalah 20% dari Total Data Training.</p>
+            <h4>Confusion Matrix</h4>
           </div>
+                <table class="table table-striped table-bordered">
+          <tr>
+            <th></th>
+            <th>Predict: 1</th>
+            <th>Predict: 0</th>
+          </tr>
+          <tr>
+            <th>Actual: 1 (contains location)</th>
+            <td><%= @confusion[:tp] %></td>
+            <td><%= @confusion[:fn] %></td>
+          </tr>
+          <tr>
+            <th>Actual: 0 (no location)</th>
+            <td><%= @confusion[:fp] %></td>
+            <td><%= @confusion[:tn] %></td>
+          </tr>
+          <tr>
+            <th>Accuracy</th>
+            <td><%= @accuracy %>%</td>
+            <td></td>
+          </tr>
+          <tr>
+            <th>Precision</th>
+            <td><%= @precision %>%</td>
+            <td></td>
+          </tr>
+          <tr>
+            <th>Recall</th>
+            <td><%= @recall %>%</td>
+            <td></td>
+          </tr>
+          <tr>
+            <th>F1-Score</th>
+            <td><%= @f1Score %>%</td>
+            <td></td>
+          </tr>
+                </table>
           <div class="card-body">
                 <table class="table table-striped table-hover">
                 <thead>
