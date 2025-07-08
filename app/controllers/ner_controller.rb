@@ -1,23 +1,39 @@
 class NerController < ApplicationController
+  # LOCATION_KEYWORDS = Location.pluck(:lokasi).map(&:downcase)
   def show
     total = DataItem.count
-    limit = (total * 0.2).to_i
-    @dataTesting = DataItem.order(created_at: :desc).limit(limit)
+  limit = (total * 0.2).to_i
+  @dataTesting = DataItem.order(created_at: :desc).limit(limit)
 
-    svm_service = SvmSentenceClassifierService.new
-    svm_service.train_model
+  svm_service = SvmSentenceClassifierService.new
+  svm_service.train_model
 
-    # Tambahkan hasil prediksi ke tiap item (bisa sebagai hash array)
-    @predicted_data = @dataTesting.map do |value|
-    
+  # Pastikan LOCATION_KEYWORDS tersedia, bisa diinisialisasi di sini:
+  location_keywords = Location.pluck(:lokasi).map(&:downcase)
+
+  # Method deteksi lokasi dari clean_caption
+  define_singleton_method(:find_location_from_clean_caption) do |clean_caption|
+    text = clean_caption.downcase
+    sorted_locations = location_keywords.sort_by { |loc| -loc.split.size }
+
+    sorted_locations.each do |loc|
+      return loc if text.include?(loc)
+    end
+    nil
+  end
+
+  @predicted_data = @dataTesting.map do |value|
     clean_caption = svm_service.preprocess_text(value.caption)
-      {
-        caption: value.caption,    # akses atribut model via method, bukan hash string
-        clean_caption: clean_caption,
-        label: value.label,
-        prediction: svm_service.predict(value.caption)
-      }
-    end 
+    detected_location = find_location_from_clean_caption(clean_caption)
+
+    {
+      caption: value.caption,
+      clean_caption: clean_caption,
+      label: value.label,
+      prediction: svm_service.predict(value.caption),
+      detected_location: detected_location
+    }
+  end
     
     tp = fp = tn = fn = 0
 

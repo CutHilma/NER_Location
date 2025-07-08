@@ -3,24 +3,45 @@ require 'rb-libsvm'
 class SvmSentenceClassifierService
   
   location_array = Location.pluck(:lokasi)
-  LOCATION_KEYWORDS = "%W[#{location_array.join(' ')}]"
-  
+  LOCATION_KEYWORDS = location_array.map(&:downcase)
+
+  def detect_location_ner(text)
+    pattern = /\b(di|ke|dari|pada|ke arah)\s+([A-Z]\w*(?:\s+[A-Z]\w*)*)/
+    match = text.match(pattern)
+    
+    if match
+      location = match[2]
+      return "Contains Location"
+    else
+      return "No Location Found"
+    end
+  end
+
   def extract_features(sentence)
     words = sentence.split(" ")
     capital_words = words.select { |w| w[0] =~ /[A-Z]/ }
-    keyword_found = words.any? { |w| LOCATION_KEYWORDS.include?(w) } ? 1 : 0
-  
+    
+    location_result = detect_location_ner(sentence)
+    
+    keyword_found = if location_result != "No Location Found"
+    else
+      # fallback cek lokasi dengan LOCATION_KEYWORDS
+      # found = words.any? { |w| LOCATION_KEYWORDS.include?(w.downcase) }
+      found = LOCATION_KEYWORDS.any? { |loc| sentence.downcase.include?(loc) }
+      found ? 1 : 0
+    end
+
     [
-      words.size.to_f / 50.0,           # asumsi max 50 kata
-      capital_words.size.to_f / 10.0,   # asumsi max 10 kata kapital
-      sentence.length.to_f / 200.0,     # asumsi max panjang 200 karakter
+      words.size.to_f / 50.0,
+      capital_words.size.to_f / 10.0,
+      sentence.length.to_f / 200.0,
       keyword_found.to_f
     ]
-  end  
+  end
+
 
   def preprocess_text(text)
-    text.downcase                         # konversi ke huruf kecil
-        .gsub(/[^a-z\s]/i, '')            # hapus semua karakter kecuali huruf dan spasi
+    text.gsub(/[^a-z\s]/i, '')            # hapus semua karakter kecuali huruf dan spasi
         .squeeze(" ")                     # hapus spasi berlebih
         .strip                            # hapus spasi di awal/akhir
   end

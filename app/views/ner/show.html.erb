@@ -63,6 +63,7 @@
                     <th>After Preprocessing</th>
                     <th>Before Label</th>
                     <th>Prediction Label</th>
+                    <th>Location Label</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -74,6 +75,7 @@
                         <td><%= value[:clean_caption] %></td>
                         <td><%= value[:label] %></td>
                         <td><%= value[:prediction] %></td>
+                        <td><%= value[:detected_location] %></td>
                         <td></td>
                     </tr>
                     <% no += 1 %>
