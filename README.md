@@ -1,5 +1,9 @@
 # README
 
+Ruby Version 3.3.2
+Rails Version 8.0.2
+Default Database (SQLite)
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
