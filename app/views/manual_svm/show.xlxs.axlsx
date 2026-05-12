@@ -1,0 +1,15 @@
+wb = xlsx_package.workbook
+
+wb.add_worksheet(name: "Manual SVM") do |sheet|
+  sheet.add_row ["No", "Caption", "Fitur", "Decision Function", "Prediksi"]
+
+  @manual_result.each_with_index do |data, index|
+    sheet.add_row [
+      index + 1,
+      data[:caption],
+      data[:features].join(", "),
+      data[:decision].round(5),
+      data[:prediksi]
+    ]
+  end
+end

@@ -1,0 +1,104 @@
+<!-- app/views/ner/visualisasi.html.erb -->
+<div class="max-w-6xl mx-auto bg-white rounded-2xl shadow-lg p-8 space-y-10 mt-10">
+  <h2 class="text-3xl font-bold text-gray-800 text-center mb-6">Visualisasi Model SVM + NER</h2>
+  <!-- Chartkick dan Chart.js CDN -->
+  <%= javascript_include_tag "https://cdn.jsdelivr.net/npm/chartkick@5.0.1/dist/chartkick.min.js" %>
+  <%= javascript_include_tag "https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" %>
+
+  <!-- Distribusi Prediksi (Bar Chart) -->
+  <div class="bg-gray-50 p-6 rounded-lg shadow">
+    <h3 class="text-lg font-bold text-gray-700 mb-3">Distribusi Prediksi Caption</h3>
+
+    <%= bar_chart @summary_data, 
+      colors: ["#0654d1", "#e60e0e"], 
+      library: {
+        plugins: {
+          legend: {
+            display: false
+          }
+        }
+      }
+    %>
+  </div>
+
+  <%# <!-- Scatter Chart: Panjang Caption vs Jumlah Entity -->
+  <div class="bg-gray-50 p-6 rounded-lg shadow">
+    <h3 class="text-xl font-semibold text-gray-700 mb-4">Scatter Plot Panjang Caption vs Jumlah Entity</h3>
+    <%= scatter_chart @chart_data, xtitle: "Panjang Caption", ytitle: "Jumlah Entitas Terdeteksi", library: {
+      colors: ["#10b981"]
+    } %>
+  <%# </div> %>
+  <!-- Scatter Chart: Panjang Caption vs Jumlah Entity -->
+  <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-6 space-y-6">
+    <!-- Header -->
+    <div class="flex justify-between items-start">
+      <div>
+        <h2 class="text-xl font-semibold text-gray-800 flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-emerald-500" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M9 17v-6a2 2 0 012-2h2a2 2 0 012 2v6m4 0v-4a2 2 0 00-2-2h-4m-4 0a2 2 0 00-2 2v4" />
+          </svg>
+          Scatter Plot: Panjang Caption vs Entitas
+        </h2>
+        <p class="text-sm text-gray-500 mt-1">Visualisasi korelasi antara panjang caption dan jumlah entitas lokasi yang terdeteksi.</p>
+      </div>
+    </div>
+
+    <!-- Chart -->
+    <div class="overflow-x-auto">
+      <%= scatter_chart @chart_data,
+        xtitle: "Panjang Caption",
+        ytitle: "Jumlah Entitas Terdeteksi",
+        height: "420px",
+        library: {
+          chart: {
+            backgroundColor: "transparent",
+            spacingBottom: 50
+          },
+          tooltip: {
+            shared: true,
+            crosshairs: true
+          },
+          title: nil,
+          xAxis: {
+            title: {
+              text: "Panjang Caption",
+              style: { color: "#374151", fontWeight: "bold", fontSize: "13px" }
+            },
+            gridLineWidth: 1,
+            labels: { style: { color: "#6b7280" } }
+          },
+          yAxis: {
+            title: {
+              text: "Jumlah Entitas",
+              style: { color: "#374151", fontWeight: "bold", fontSize: "13px" }
+            },
+            gridLineWidth: 1,
+            labels: { style: { color: "#6b7280" } }
+          },
+          legend: {
+            enabled: true,
+            layout: "horizontal",
+            align: "center",
+            verticalAlign: "bottom",
+            itemStyle: {
+              color: "#374151",
+              fontWeight: "500",
+              fontSize: "13px"
+            }
+          },
+          colors: ["#10b981", "#f97316"]
+        }
+      %>
+    </div>
+  </div>
+
+  <!-- Pie Chart Perbandingan Caption Mengandung Lokasi vs Tidak -->
+  <div class="bg-gray-50 p-6 rounded-lg shadow">
+    <h3 class="text-xl font-semibold text-gray-700 mb-4">Perbandingan Caption Mengandung Lokasi</h3>
+    <%= pie_chart @summary_data, donut: true, library: {
+      colors: ["#1045b9ff", "#fa2323ff"]
+    } %>
+  </div>
+</div>

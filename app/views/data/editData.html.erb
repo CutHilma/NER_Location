@@ -1,33 +1,54 @@
+<main class="flex-1 px-6 py-8">
+  <!-- Breadcrumb -->
+  <nav class="text-sm text-gray-500 mb-6">
+    <ol class="list-reset flex">
+      <li><a href="/data/show" class="text-blue-600 hover:underline">Data</a></li>
+      <li class="mx-2">/</li>
+      <li class="text-gray-700 font-semibold">Edit Data</li>
+    </ol>
+  </nav>
 
-<%= render 'templates/header' %>
-<%= render 'templates/sidebar' %>
-      <!-- Main Content -->
-      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Data</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Edit Data</li>
-          </ol>
-        </nav>
-        <div class="card">
-          <div class="card-body">
-            <%= form_tag("/data/edit/#{@data_item.id}") %>
-            <div class="form-group">
-                <label>Caption</label>
-                <textarea class="form-control" name="caption"><%= @data_item.caption %></textarea>
-            </div>
-            <div class="form-group">
-                <label>Label</label>
-                <select class="form-control" name="label">
-                  <option value="<%= @data_item.label %>">- <%= @data_item.label %></option>
-                  <option value="0">0</option>
-                  <option value="1">1</option>
-                </select>
-            </div>
-            <button class="btn btn-primary btn-sm mt-2" type="submit">Simpan</button>
-        </div>
-        </div>
-      </main>
-    </div>
+  <!-- Card Container -->
+  <div class="max-w-3xl mx-auto bg-white shadow-lg rounded-xl p-8 border border-gray-200">
+    <h2 class="text-2xl font-bold text-gray-800 mb-6">Edit Caption</h2>
+
+    <%= form_tag("/data/edit/#{@data_item.id}", method: :post, class: "space-y-6") do %>
+
+      <!-- Hidden ID Field (Optional for safety) -->
+      <%= hidden_field_tag :id, @data_item.id %>
+
+      <!-- Caption Input -->
+      <div>
+        <label for="caption" class="block text-sm font-medium text-gray-700 mb-1">Caption</label>
+        <textarea name="caption" id="caption" rows="5"
+          class="w-full px-4 py-2 text-gray-800 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder-gray-400 resize-none"
+          placeholder="Masukkan caption di sini..."><%= @data_item.caption %></textarea>
+      </div>
+
+      <!-- Label Select -->
+      <div>
+        <label for="label" class="block text-sm font-medium text-gray-700 mb-1">Label</label>
+        <select name="label" id="label"
+          class="w-full px-4 py-2 text-gray-800 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
+          <option value="0" <%= 'selected' if @data_item.label.to_s == '0' %>>0</option>
+          <option value="1" <%= 'selected' if @data_item.label.to_s == '1' %>>1</option>
+        </select>
+      </div>
+
+      <!-- Buttons -->
+      <div class="flex justify-between">
+        <a href="/data/show" 
+           class="inline-flex items-center gap-2 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium px-5 py-2 rounded-md shadow transition">
+          <i class="fas fa-arrow-left"></i> Kembali
+        </a>
+        <button type="submit"
+          class="inline-flex items-center gap-2 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold px-6 py-2 rounded-lg shadow transition duration-200">
+          <i class="fas fa-edit"></i> Update
+        </button>
+      </div>
+
+    <% end %>
   </div>
+</main>
+
 <%= render 'templates/footer' %>

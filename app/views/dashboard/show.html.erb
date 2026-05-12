@@ -1,30 +1,71 @@
-
-<%= render 'templates/header' %>
-<%= render 'templates/sidebar' %>
+<body class="bg-gray-100 min-h-screen font-sans antialiased" x-data="{ sidebarOpen: false }">
+  <%# <%= render 'templates/header' %> 
+  <!-- Wrapper -->
+  
+  <div class="flex min-h-screen flex-col lg:flex-row">
+    
       <!-- Main Content -->
-      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
-        <h2>Dashboard</h2>
-        <div class="row mt-4">
-          <div class="col-md-4 mb-3">
-            <div class="card text-bg-primary">
-              <div class="card-body">
-                <h5 class="card-title">Users</h5>
-                <p class="card-text">Total: <%= @user_item %></p>
-              </div>
-            </div>
+      <div class="flex-1 flex flex-col">
+        <!-- Top Navbar on small screen -->
+        <header class="lg:hidden bg-white shadow-md px-4 py-3 flex items-center justify-between border-b">
+          <%# <button @click="sidebarOpen = true" class="text-gray-700 focus:outline-none">
+            <!-- Hamburger icon -->
+            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+          </button> %>
+          <h1 class="text-lg font-semibold">Dashboard</h1>
+        </header>
+        <!-- Page Content -->
+        <main class="px-6 py-6 bg-white shadow-sm overflow-x-auto flex-1">
+          <div class="max-w-4xl mx-auto">
+      
+            <h1 class="text-center text-lg md:text-xl font-semibold text-gray-700 mb-6 leading-relaxed">
+              Named Entity Lokasi dalam Postingan Teks Instagram Menggunakan Algoritma Support Vector Machine
+            </h1>
+            <div class="space-y-5 text-gray-700 text-justify text-base leading-relaxed">
+              <p>
+                &emsp;Penggunaan sarana teknologi memberikan kemudahan dalam mengakses informasi, 
+                seperti informasi pendidikan, kesehatan, hiburan ataupun bidang lainnya. 
+                Peningkatan produktivitas dalam kegiatan sehari-hari menjadi efek dari penggunaan teknologi digital 
+                yang semakin terbarukan, dapat dilihat dari penggunaan aplikasi maupun perangkat lunak yang mempermudah kegiatan keseharian. 
+                Instagram menjadi salah satu dari sekian banyak media sosial yang digemari oleh masyarakat untuk mengekspresikan diri dalam 
+                berbagai bentuk postingan.
+              </p>
+              <p>
+                &emsp;Deskripsi dalam postingan teks Instagram menjadi sebuah informasi tekstual yang dapat diolah untuk mendapatkan suatu informasi. 
+                Deskripsi postingan atau caption dapat diproses dengan mengidentifikaskan pola baru guna mendapatkan entitas lokasi. 
+                Pengidentifikasian entitas dalam sebuah dokumen teks bertujuan untuk memudahkan pencarian informasi yang didasarkan pada pembagian nama entitas 
+                terhadap tiap kata yang ada dalam teks. 
+              </p>
+              <p>
+                &emsp;Namun, dalam implementasinya named entity lokasi tidaklah mudah untuk diidentifikasikan. Teks yang diperoleh sering kali tidak baku, 
+                bebahasa informal, singkat dan bisa berupa campuran bahasa asing. Tidak semua entitas lokasi bisa diperoleh langsung dalam format yang dikenali, 
+                sehingga dibutuhkan pendekatan yang mampu mengenali pola-pola linguistik maupun konteks lokasi secara mendalam.
+              </p>
+              <p>
+                &emsp;Oleh karena itu, diperlukan metode yang mampu untuk melakukan klasifikasi dan identifikasi lokasi secara efektif dalam teks. 
+                Salah satu pendekatan yang bisa diterapkan adalah algoritma Support Vector Machine yang dikenal efektif dalam klasifikati data berbasis teks.
+              </p>
+              <p>
+                &emsp;Dalam penelitian klasifikasi teks berbahasa Indonesia untuk mengkategorikan 3 bentuk pertanyaan berbahasa Indonesia yaitu factoid, 
+                non-factoid, dan other telah digunakan algoritma Support Vector Machine dan Mutual information, mendapatkan hasil kinerja akurasi sebesar 0.92, 
+                dengan nilai f-measure sebesar 0.9, precision 0.93 dan recall 0.89 yang menunjukkan bahwa algoritma support vector machine ini cocok digunakan 
+                untuk penelitian klasifikasi data berbasis teks.
+              </p>
+              <p>
+                &emsp;Oleh sebab itu, penelitian ini bisa menjadi langkah awal untuk pengembangan Natural Language Processing pada penelitian terhadap 
+                platform media sosial serta ikut serta memberikan kontribusi dalam Analisa spasial dan pengambilan keputusan berbasis lokasi, 
+                terutama dalam konteks perilaku pengguna digital di Indonesia. Diharapkan penelitian ini mampu menjadi langkah awal terhadap 
+                pengembangan sistem imformasi yang lebih cerdas, akurat, dan adaptif terhadap dinamika bahasa di ranah dunia maya.
+              </p>
+              <%= yield %>
           </div>
-          <div class="col-md-4 mb-3">
-            <div class="card text-bg-success">
-              <div class="card-body">
-                <h5 class="card-title">Data Caption</h5>
-                <p class="card-text">Total: <%= @data_item %></p>
-              </div>
-            </div>
-          </div>
-          
         </div>
       </main>
     </div>
   </div>
+  <%= render 'templates/footer' %>
+</body>
 
-<%= render 'templates/footer' %>

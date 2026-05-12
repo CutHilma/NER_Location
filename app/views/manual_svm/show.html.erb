@@ -1,0 +1,42 @@
+<%= button_to "Latih Model SVM", train_manual_svm_path, method: :post, data: { confirm: "Latih ulang model? Ini akan menimpa model sebelumnya." }, class: "btn btn-primary mb-3" %>
+
+<h2>Perhitungan Manual SVM</h2>
+<% @training_result.each_with_index do |item, i| %>
+  <div class="card p-4 mb-6 bg-white shadow rounded">
+    <h3 class="font-semibold">#<%= i + 1 %> Caption</h3>
+    <p><%= item[:caption] %></p>
+
+    <p><strong>Fitur:</strong> <%= item[:features].map { |f| f.round(3) }.join(", ") %></p>
+    <p><strong>Decision Value:</strong> <%= item[:decision] %></p>
+    <p><strong>Prediksi:</strong> <%= item[:prediksi] %></p>
+    <p><strong>Bias:</strong> <%= item[:bias] %></p>
+    <p><strong>Kernel Sum:</strong> <%= item[:kernel_sum] %></p>
+
+    <details>
+      <summary class="cursor-pointer text-blue-600">Detail Kernel & α</summary>
+      <table class="table-auto w-full text-sm mt-2">
+        <thead>
+          <tr class="border-b">
+            <th>α</th>
+            <th>y</th>
+            <th>Kernel</th>
+            <th>α·y·K(x,x_i)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% item[:kernel_details].each do |k| %>
+            <tr class="border-b">
+              <td><%= k[:alpha] %></td>
+              <td><%= k[:label] %></td>
+              <td><%= k[:kernel_value].round(5) %></td>
+              <td><%= k[:score] %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </details>
+  </div>
+
+  <%= line_chart item[:kernel_details].each_with_index.map { |k, idx| [idx, k[:kernel_value].round(5)] }, height: "200px", xtitle: "Index SV", ytitle: "Kernel Value" %>
+
+<% end %>

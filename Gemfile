@@ -17,8 +17,8 @@ gem "stimulus-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 
-gem 'rumale', '>= 0.21.0'
-gem 'rb-libsvm'
+# gem 'rumale', '>= 0.21.0'
+
 
 gem 'httparty'
 gem 'nokogiri'
@@ -35,7 +35,7 @@ gem "solid_queue"
 gem "solid_cable"
 
 # Reduces boot times through caching; required in config/boot.rb
-gem "bootsnap", require: false
+gem "bootsnap", '~> 1.17', require: false
 
 # Deploy this application anywhere as a Docker container [https://kamal-deploy.org]
 gem "kamal", require: false
@@ -67,3 +67,18 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+ruby "~> 3.3.2"
+
+gem "chartkick"
+gem "groupdate" # untuk dukungan waktu kalau pakai time-based charts
+
+gem 'caxlsx_rails'
+gem 'caxlsx'
+
+# gem 'gruff'          # Untuk membuat grafik PNG
+gem 'wicked_pdf'     # PDF generator
+gem 'wkhtmltopdf-binary'
+
+gem 'rb-libsvm', '~> 1.4.4'
+

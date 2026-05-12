@@ -1,33 +1,51 @@
-<div class="container-fluid">
-    <div class="row">
-      <!-- Sidebar -->
-      <nav class="col-md-3 col-lg-2 d-md-block sidebar py-4">
-        <div class="text-center mb-4"  class="text-center mb-4" style="border-bottom: 2px solid #fff;">
-          <h4>NER</h4>
+<aside 
+  :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'" 
+  class="z-40 w-64 bg-lime-800 text-white transform transition-transform duration-200 ease-in-out
+         fixed md:static md:inset-y-0 md:left-0 md:translate-x-0 
+         top-16 md:top-0 inset-y-0 left-0  ">  
+  <nav class="h-full overflow-y-auto mt-4 px-4 space-y-2 text-sm">
+    <% if current_user %>
+      <%= nav_link("Dashboard", dashboard_path, "home") %>
+      <%= nav_link("Crawling Data", "/instagram_scraper", "download") %>
+      <%= nav_link("Data Captions", "/data/show", "database") %>
+      <%= nav_link("Daftar Lokasi", "/location/index", "map") %>
+      <%= nav_link("Evaluasi NER", "/ner_evaluation", "bar-chart") %>
+      
+      <!-- SVM submenu -->
+      <div class="space-y-1">
+        <button @click="submenu.ner = !submenu.ner"
+            class="flex items-center w-full px-3 py-2 hover:bg-lime-600 rounded focus:outline-none">
+          <svg class="h-4 w-4 mr-2 text-gray-300" xmlns="http://www.w3.org/2000/svg" fill="none"
+            viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M9 5l7 7-7 7" />
+          </svg>
+          <span>SVM Model</span>
+        </button>
+        <div x-show="submenu.ner" x-cloak class="ml-5 space-y-1">
+          <%= nav_link("Prediksi & Evaluasi", "/ner/show", "bar-chart") %>
+          
+          <%= nav_link("Visualisasi", ner_visualisasi_path, "line-chart") %>
+          
         </div>
-        <ul class="nav flex-column px-3">
-          <li class="nav-item mb-2">
-            <a class="nav-link" href="/dashboard">Dashboard</a>
-          </li>
-          <li class="nav-item mb-2">
-            <a class="nav-link" href="/user/show">Users Management</a>
-          </li>
-          <li class="nav-item mb-2">
-            <a class="nav-link" href="/instagram_scraper">Scraping Data</a>
-          </li>
-          <li class="nav-item mb-2">
-            <a class="nav-link" href="/data/show">Data</a>
-          </li>
-          <li class="nav-item mb-2">
-            <a class="nav-link" href="/location/index">Lokasi</a>
-          </li>
-          <li class="nav-item mb-2">
-            <a class="nav-link" href="/ner/show">SVM Model</a>
-          </li>
-          
-          
-          <li class="nav-item mt-4">
-            <a class="nav-link text-danger" href="/pages/logout">Logout</a>
-          </li>
-        </ul>
-      </nav>
+      </div>
+
+      <% if current_user.role == "admin" %>
+        <%= nav_link("User Management", "/user/show", "users") %>
+      <% else %>
+        <%= nav_link("Profil Saya", "/profile", "user") %>
+      <% end %>
+
+      <div class="border-t border-gray-700 pt-4">
+        <%= nav_link("Logout", logout_path, "log-out", "text-red-400 hover:text-red-300") %>
+      </div>
+    <% else %>
+      <!-- Saat belum login -->
+      <%= nav_link("Crawling Data", "/instagram_scraper", "download") %>
+
+      <div class="border-t border-gray-700 pt-4">
+        <%= nav_link("Login", login_path, "log-in", "text-green-400 hover:text-green-300") %>
+      </div>
+    <% end %>
+  </nav>
+</aside>

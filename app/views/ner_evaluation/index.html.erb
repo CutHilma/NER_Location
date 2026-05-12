@@ -1,0 +1,56 @@
+<div class="max-w-6xl mx-auto px-4 py-6">
+  <h2 class="text-2xl font-bold mb-6 text-gray-800">📊 Evaluasi NER Rule-Based</h2>
+
+  <div class="overflow-x-auto bg-white shadow-md rounded-lg">
+    <table class="min-w-full table-auto border border-gray-300">
+      <thead class="bg-gray-100 text-gray-700">
+        <tr class="text-sm font-semibold text-center">
+          <th class="py-3 px-4 border">Rule</th>
+          <th class="py-3 px-4 border">TP</th>
+          <th class="py-3 px-4 border">FP</th>
+          <th class="py-3 px-4 border">FN</th>
+          <th class="py-3 px-4 border">TN</th>
+          <th class="py-3 px-4 border">Akurasi</th>
+          <th class="py-3 px-4 border">Precision</th>
+          <th class="py-3 px-4 border">Recall</th>
+          <th class="py-3 px-4 border">F1-Score</th>
+          
+        </tr>
+      </thead>
+      <tbody class="text-center text-sm text-gray-700">
+        <% @results.each do |r| %>
+          <tr class="hover:bg-gray-50 transition">
+            <td class="py-2 px-4 border font-medium"><%= r[:rule] %></td>
+            <td class="py-2 px-4 border"><%= r[:tp] %></td>
+            <td class="py-2 px-4 border"><%= r[:fp] %></td>
+            <td class="py-2 px-4 border"><%= r[:fn] %></td>
+            <td class="py-2 px-4 border"><%= r[:tn] %></td>
+            <td class="py-2 px-4 border"><%= r[:accuracy] %></td>
+            <td class="py-2 px-4 border"><%= r[:precision] %></td>
+            <td class="py-2 px-4 border"><%= r[:recall] %></td>
+            <td class="py-2 px-4 border"><%= r[:f1_score] %></td>
+            
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="mt-8 flex justify-center">
+    <%= column_chart @results.map { |r| [r[:rule], r[:f1_score]] },
+        xtitle: "Rule", ytitle: "F1 Score",
+        library: {
+            chart: { width: 600 },
+            title: { text: "F1 Score Tiap Rule NER", align: 'center' },
+            yAxis: { min: 0, max: 1 },
+            plotOptions: {
+                column: {
+                colorByPoint: true,
+                pointWidth: 60,       # Lebar batang dalam piksel 
+                groupPadding: 0.01     # Sedikit jarak antar kategori, boleh diatur
+                }
+            }
+        } %>
+    </div>
+
+</div>

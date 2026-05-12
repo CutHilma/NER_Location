@@ -1,13 +1,13 @@
 Rails.application.routes.draw do
-  
+
   # Halaman Login
-  root 'pages#login'  # homepage
-  get 'login', to: 'pages#login'
-  post 'login', to: 'pages#login'
-  get 'pages/logout', to: 'pages#logout'
+  get    '/login',  to: 'session#login'
+  post   '/login',  to: 'session#do_login'
+  get    '/logout', to: 'session#logout'
 
   # Halaman Dashboard
-  get 'dashboard', to: 'dashboard#show'
+  root 'instagram_scraper#index' #homepage
+  get 'dashboard', to: 'dashboard#show', as: 'dashboard'
 
   # Halaman User Management
   get 'user/show'
@@ -16,10 +16,16 @@ Rails.application.routes.draw do
   get '/user/delete/:id' => 'user#delete'
   get '/user/editData/:id' => 'user#editData'
   post '/user/edit/:id' => 'user#edit'
+  get '/profile', to: 'user#profile'
+  post '/profile/update', to: 'user#update_profile'
+
 
   # Intagram Scrapper
-  get "instagram_scraper/index"
-  get "instagram_scraper/scrape"
+  # Tambahkan baris ini:
+  get 'instagram_scraper/scrape', to: 'instagram_scraper#scrape', as: 'scrape_instagram_scraper_index'
+
+  # Atau tambahkan sekaligus index:
+  get 'instagram_scraper', to: 'instagram_scraper#index', as: 'instagram_scraper_index'
 
   # Halaman Data
   get 'data/show'
@@ -28,6 +34,8 @@ Rails.application.routes.draw do
   get '/data/delete/:id' => 'data#delete'
   get '/data/editData/:id' => 'data#editData'
   post '/data/edit/:id' => 'data#edit'
+  get '/data/export_csv', to: 'data#export_csv', as: 'export_csv_data'
+
 
   #Halaman Location
   get "location/index"
@@ -38,14 +46,31 @@ Rails.application.routes.draw do
   get '/location/editData/:id' => 'location#editData'
   post '/location/edit/:id' => 'location#edit'
 
+
+  # Halaman Evaluasi NER rules
+  get 'ner_evaluation', to: 'ner_evaluation#index'
+
+
   #Halaman SVM
   get 'ner/show'
   get 'ner/train', to: 'ner#train'
   get 'ner/predict', to: 'ner#predict'
-  
+  get 'ner/show_grafik', to: 'ner#show_grafik', as: 'ner_show_grafik'
+  get 'ner/show_data_training', to: 'ner#show_data_training', as: 'ner_show_data_training'
+  get 'ner/visualisasi', to: 'ner#visualisasi', as: 'ner_visualisasi'
+  get '/ner/export_predictions_csv', to: 'ner#export_predictions_csv', as: 'export_predictions_csv'
+  get '/ner/export_predictions_excel', to: 'ner#export_predictions_excel', as: 'export_predictions_excel'
+
+
   #Scraping Data Instagram
   get 'instagram_scraper', to: 'instagram_scraper#index'
   post 'instagram_scraper/scrape', to: 'instagram_scraper#scrape'
+
+  # Halaman prehitungan maual svm
+  get 'manual_svm/show', to: 'manual_svm#show', as: 'manual_svm_show'
+  post 'manual_svm/train', to: 'manual_svm#train', as: :train_manual_svm
+
+
 
 
 end

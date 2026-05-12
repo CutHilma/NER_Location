@@ -1,5 +1,8 @@
 class LocationController < ApplicationController
-  
+
+  before_action :require_login, except: [:index , :addData]
+  before_action :check_admin, only: [:editData, :edit, :delete]
+
   def index
     @lokasi = Location.all
   end
@@ -32,4 +35,5 @@ class LocationController < ApplicationController
     flash[:pesan] = "<div class='alert alert-success alert-dismissible fade show' data-bs-dismiss='alert' aria-label='Close'>Data berhasil dihapus.</div>"
     redirect_to("/location/index")
   end
+
 end

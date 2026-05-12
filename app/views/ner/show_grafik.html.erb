@@ -1,0 +1,97 @@
+<div class="max-w-5xl mx-auto bg-white rounded-2xl shadow-lg p-8 space-y-10 mt-6">
+  <h2 class="text-3xl font-bold text-gray-800 text-center">Evaluasi Model SVM + NER</h2>
+  <%= javascript_include_tag "https://cdn.jsdelivr.net/npm/chartkick@5.0.1/dist/chartkick.min.js" %>
+  <%= javascript_include_tag "https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" %>
+
+  <%# <div class="text-center mt-6">
+    <%= link_to "⬇️ Download PDF dengan Grafik", download_grafik_pdf_image_path(format: :pdf),
+        class: "inline-block bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700" %>
+  <%# </div> %>
+
+
+  <!-- Metrik Ringkas -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center text-gray-700">
+    <% {
+      accuracy: "Akurasi",
+      precision: "Presisi",
+      recall: "Recall",
+      f1_score: "F1 Score"
+    }.each do |key, label| %>
+      <div>
+        <p class="text-sm text-gray-500"><%= label %></p>
+        <p class="text-xl font-semibold"><%= number_with_precision(@testing_metrics[key], precision: 2) %>%</p>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Grafik Akurasi (Donut Chart) -->
+  <div class="max-w-md mx-auto">
+    <%= pie_chart(
+      {
+        "Benar (TP+TN)" => @testing_metrics[:tp] + @testing_metrics[:tn],
+        "Salah (FP+FN)" => @testing_metrics[:fp] + @testing_metrics[:fn]
+      },
+      title: "Akurasi Model",
+      donut: true,
+      library: {
+        legend: { position: 'bottom' },
+        colors: ["#10b981", "#ef4444"]
+      }
+    ) %>
+  </div>
+
+  <!-- Grafik Evaluasi Model (Column Chart) -->
+  <div class="bg-gray-200 p-4 rounded shadow">
+    <%= column_chart(
+      [
+        { name: "Accuracy",  data: { "" => @testing_metrics[:accuracy] },  library: { backgroundColor: "#6366f1" } },
+        { name: "Precision", data: { "" => @testing_metrics[:precision] }, library: { backgroundColor: "#3b82f6" } },
+        { name: "Recall",    data: { "" => @testing_metrics[:recall] },    library: { backgroundColor: "#10b981" } },
+        { name: "F1 Score",  data: { "" => @testing_metrics[:f1_score] },  library: { backgroundColor: "#f59e0b" } }
+      ],
+
+      title: "Evaluasi Kinerja Model SVM",
+      height: "400px",
+      library: {
+        chart: { type: "column" },
+        plotOptions: {
+          column: {
+            pointPadding: 0.1,
+            borderWidth: 0,
+            pointWidth: 10,
+            dataLabels: {
+              enabled: true,
+              format: "{point.y:.2f}%"
+            }
+          }
+        },
+        yAxis: {
+          max: 100,
+          title: { text: "Persentase (%)" }
+        },
+        xAxis: {
+          categories: [""]
+        },
+        legend: {
+          enabled: true
+        }
+      }
+    ) %>
+  </div>
+
+  <!-- Grafik Confusion Matrix -->
+  <div>
+    <%= bar_chart(
+      [
+        { name: "True Positive",  data: { "" => @testing_metrics[:tp] },  library: { backgroundColor: "#1f77b4" } },
+        { name: "False Positive", data: { "" => @testing_metrics[:fp] },  library: { backgroundColor: "#d62728" } },
+        { name: "True Negative",  data: { "" => @testing_metrics[:tn] },  library: { backgroundColor: "#2ca02c" } },
+        { name: "False Negative", data: { "" => @testing_metrics[:fn] },  library: { backgroundColor: "#ff7f0e" } }
+      ],
+      title: "Confusion Metrics",
+      library: {
+        legend: { enabled: true }
+      }
+    ) %>
+  </div>
+</div>
