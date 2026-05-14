@@ -1,4 +1,4 @@
-# class ManualSvmCalculatorService
+class ManualSvmCalculatorService
 #   def initialize(svm_service)
 #     @svm_service = svm_service
 #     @model_info = @svm_service.extract_model_info
@@ -61,4 +61,4 @@
 #     puts "[DECISION] ∑(α * y * K) = #{sum.round(4)}, bias = #{bias.round(4)}, fx = #{fx.round(4)}"
 #     fx
 #   end
-# end
+end
