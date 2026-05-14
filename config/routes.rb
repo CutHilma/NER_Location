@@ -78,5 +78,8 @@ Rails.application.routes.draw do
     [200, {"Content-Type" => "text/plain"}, ["Admin created successfully"]]
   }
 
+  post 'instagram_scraper/save_label',
+    to: 'instagram_scraper#save_label',
+    as: 'save_label_instagram_scraper_index'
 
 end
