@@ -40,10 +40,19 @@ class InstagramScraperController < ApplicationController
     render :index
 
     # Simpan ke tabel data_items
+    # DataItem.create(
+    #   caption: @caption,
+    #   label: @has_location ? 1 : 0 # 1 jika mengandung lokasi, 0 jika tidak
+    # )
+  end
+  def save_label
     DataItem.create(
-      caption: @caption,
-      label: @has_location ? 1 : 0 # 1 jika mengandung lokasi, 0 jika tidak
+      caption: params[:caption],
+      label: params[:label]
     )
+
+    flash[:success] = "Dataset berhasil disimpan!"
+    redirect_back(fallback_location: root_path)
   end
   def load_location_keywords
     Location.pluck(:lokasi)
