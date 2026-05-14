@@ -1,4 +1,7 @@
-# require 'csv'
+class ManualSvmController < ApplicationController
+
+end
+  # require 'csv'
 # class ManualSvmController < ApplicationController
 #   def show
 #     svm_service = SvmSentenceClassifierService.new
