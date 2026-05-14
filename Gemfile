@@ -84,3 +84,4 @@ gem 'wkhtmltopdf-binary'
 
 gem 'rb-libsvm', '~> 1.4.4'
 
+gem 'yaml_db'
